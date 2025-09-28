@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធតាមដានទីតាំងផ្ទាល់</title>
+    <title>ប្រព័ន្ធពិនិត្យទីតាំងឆ្លាតវៃ</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&display=swap');
 
+        :root {
+            --primary-color: #007bff;
+            --danger-color: #dc3545;
+            --success-color: #28a745;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --text-color: #343a40;
+        }
+
         body {
             font-family: 'Kantumruy Pro', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: var(--light-gray);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,77 +32,117 @@
 
         .container {
             background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             text-align: center;
         }
 
-        h1 {
-            color: #0056b3;
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 0.5rem;
         }
 
-        p {
-            color: #666;
-            margin-bottom: 1.5rem;
+        .header h1 {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .header img {
+            width: 32px;
+            height: 32px;
         }
 
-        .target-location {
-            background: #e9ecef;
-            padding: 10px;
-            border-radius: 8px;
+        .container > p {
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .settings-form {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 12px;
             margin-bottom: 1.5rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .input-group.full-width {
+            grid-template-columns: 1fr;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .input-field label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
             font-size: 0.9em;
         }
 
-        .controls button {
+        .input-field input {
+            font-family: 'Kantumruy Pro', sans-serif;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        
+        .btn {
             font-family: 'Kantumruy Pro', sans-serif;
             font-size: 1rem;
+            font-weight: 700;
             padding: 12px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        #start-btn {
-            background-color: #28a745;
-            color: white;
-        }
-
-        #start-btn:hover {
-            background-color: #218838;
-        }
-
-        #stop-btn {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        #stop-btn:hover {
-            background-color: #c82333;
-        }
-
-        #stop-btn:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-        }
+        
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: #0069d9; }
+        .btn-success { background-color: var(--success-color); color: white; }
+        .btn-success:hover { background-color: #218838; }
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn:disabled { background-color: var(--dark-gray); cursor: not-allowed; }
 
         .result-container {
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #dee2e6;
+            border-top: 1px solid var(--medium-gray);
         }
 
-        #status {
-            font-weight: 500;
-            color: #007bff;
-            min-height: 24px;
+        .status {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
+        
+        .status.in-zone { background-color: #d4edda; color: #155724; }
+        .status.out-zone { background-color: #f8d7da; color: #721c24; }
+        .status.neutral { background-color: var(--medium-gray); color: var(--text-color); }
 
         .info-grid {
             margin-top: 1rem;
@@ -101,117 +151,170 @@
             gap: 1rem;
         }
 
+        .info-grid div {
+            font-size: 1.1em;
+        }
+
         .info-grid span {
             font-weight: 700;
             color: #d9534f;
             font-size: 1.2em;
         }
-
-        .info-grid #user-coords {
-            font-size: 1em;
-            color: #555;
-        }
     </style>
-    </head>
+</head>
 <body>
 
     <div class="container">
-        <h1>📍 ប្រព័ន្ធតាមដានទីតាំងផ្ទាល់</h1>
-        <p>គណនាចម្ងាយភ្លាមៗពីទីតាំងគោលដៅនៅពេលអ្នកធ្វើដំណើរ</p>
-
-        <div class="target-location">
-            <strong>ទីតាំងគោលដៅ៖</strong>
-            <span id="target-coords">11.414388, 104.763638</span>
+        <div class="header">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATTSURBVFhHzZlriFVVFMd/r3uz62qSgWll6UGJKEpQSBdJUBGFFAvKAhGBfBAK3YgIYVURPYwIeukiCjMDIiCiUKRLtEFgpxA/sBRRkZkN6TzNmObce8f7zNn7Nnfe9gMH3Pvuec7+z1p777PWXrsA/6/hE+IN4h/EL0R8/xEvEn9J/C+xlvEe8b7fLwLPEn/4sQ/xnvAf4n85T8x7xGfEhz5/EH/pQ3/EvcR7hL/48BXiS/7zH/GXcZ/xdw4/iH/4tBfxgfEe8Yl/9zHxXfHd1weJLyS+Jp4QZ/8l8S/i7xJ/Ea8Tvyf+K/Gn8Xf7+A1xLw6An3Z1fC6a+KvEn8U7xO/5fS4j3iFeLw3v0c8QPxP/JzS4xPiVw5/E78n1/cRvxL/5sM/xIsk3iY+5P5niQ+IM5u6iJcSTxAv5fS6jXhS/CgH1HfiB+KvPPgH8S8O/gHxLg6fB39n/JbZ4zLie/6r9vEH4iY+p4P/4MDe5z/il0y/ivxP/JrA7wB8TeLhXQ33E3cT7yZe4W8e3k88J/4g/pL4jfg783dG8S8C/xJ/E++V0l+LfyS+If5I/Jn4nwZ/A/E58W9G3yU+7UcP+A7xJ3H/D/0i8bM6+x/xgX4sA98jPu7hK8S75bTvEr8kPufAnxC/J/4Qv0v8Xfxf9P1f3YgXiS97+E/cLaW/k/jFwX8kXujgO8TTpXS/j3jbgX8kfhb/lfg58dE6+zPxfY9fxP039P9A/Jl4g+2eZ/zbgR+J/yT+K6XfEn+Q+L3fX5O4r4Sfgfgu4hMe9iKeKaWtB/yV+D6H7xO3S+nfiwfyD+KvPHwf8VNJv1f8yYE/ED9J/LqEno74k4eXSn8j/sxBB3U6/i4n/k7i3/x5lvi4pI+T+M7Bf5L4W/mXjS8mPi9+oZ2z+IeH7+J9/p7Fh0r6+ImD/yS+Lq3D+w/xO/GzD38R90rpDxJ/cvAfias5aE5yA/E6L59A/J1AnwS/E0/z/19G/L8/7yD+Lu3zVz7+7+z4S+I/Et0S/xG/kPAd3n/pT+JnEn9PPC1l0o/4n/hBAn9H/I14P+s5w8/A31P3J/FlAn9P/LSEj5H4m6S3Kz6U/gTxYgL/g/ge8XNJO8NPiJ8Sf06L+YV4qYQfJ/FrSfeEn+84D/wM/PdkXyZ+S2Lfg/gL8U9JN1g8L20Y/B7xY0l7R3wm9QvxhYQfJvE7/2ci+P6y+4z4N+Kz+f8L4jcJf0j8tP8jQfB9ZveVwO8Qvyf+7m8/3wE+zPqLwO8T75TQX5H4Zf6dIvA7/W+I/0n8uM/TfB8Z/I/EN5P/L4n/SfgR8VNJW0o862A+8fX8/xfx9wS/ivj7xAfkfz/+hfg+gVclfgv814hH8/8fxV8b3p/4j6T3EX9O/IX4R9JnE/9I+Hni+5K2lPC+JvE1gS/l/yD+KvFj8P3j7yV9n8QXEn5GvED8J5XzSnhfEv8kfpa0m2V8rXg34Y/F1wS/h/iXpPeF/xL/K2kzjI/m41t8J/6X+Iv4J+K7ST8hfkz8i/hf0uYZXzTfJf4o+J/x8wL/D/FPJN0b/iz+FfG9pG0Z/i+iBvEj4jWn80UuAAAAAElFTkSuQmCC" alt="Location Pin">
+            <h1>ប្រព័ន្ធពិនិត្យទីតាំងឆ្លាតវៃ</h1>
         </div>
+        <p>កំណត់ទីតាំងគោលដៅ និងតំបន់ជុំវិញ រួចចាប់ផ្តើមតាមដានទីតាំងរបស់អ្នកផ្ទាល់</p>
+
+        <form class="settings-form" id="settings-form">
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="target-lat">Latitude គោលដៅ</label>
+                    <input type="number" id="target-lat" step="any" value="11.414388" required>
+                </div>
+                <div class="input-field">
+                    <label for="target-lon">Longitude គោលដៅ</label>
+                    <input type="number" id="target-lon" step="any" value="104.763638" required>
+                </div>
+            </div>
+            <div class="input-group full-width">
+                <div class="input-field">
+                    <label for="radius">កំណត់កាំតំបន់ (ម៉ែត្រ)</label>
+                    <input type="number" id="radius" value="50" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">📍 កំណត់ជាទីតាំងគោលដៅ</button>
+        </form>
 
         <div class="controls">
-            <button id="start-btn">🟢 ចាប់ផ្តើមទីតាំង</button>
-            <button id="stop-btn" disabled>🔴 បញ្ឈប់ទីតាំង</button>
+            <button id="start-btn" class="btn btn-success" disabled>🟢 ចាប់ផ្តើមតាមដាន</button>
+            <button id="stop-btn" class="btn btn-danger" disabled>🔴 បញ្ឈប់តាមដាន</button>
         </div>
 
-        <div id="result-container" class="result-container">
-            <p id="status">សូមចុចប៊ូតុង "ចាប់ផ្តើម" ដើម្បីឲ្យកម្មវិធីចាប់ផ្តើមតាមដានទីតាំងរបស់អ្នក។</p>
-            <div id="info" class="info-grid">
-                <div>
-                    <strong>ចម្ងាយពីគោលដៅ៖</strong>
-                    <span id="distance">-</span> ម៉ែត្រ
-                </div>
-                <div>
-                    <strong>ទីតាំងបច្ចុប្បន្នរបស់អ្នក៖</strong>
-                    <span id="user-coords">-</span>
-                </div>
+        <div class="result-container">
+            <div id="status" class="status neutral">សូមកំណត់ទីតាំងគោលដៅ រួចចុច "ចាប់ផ្តើម"</div>
+            <div class="info-grid">
+                <div><strong>ចម្ងាយពីគោលដៅ:</strong> <span id="distance">-</span> ម៉ែត្រ</div>
+                <div><strong>ទីតាំងបច្ចុប្បន្នរបស់អ្នក:</strong> <span id="user-coords">-</span></div>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // កូអរដោនេគោលដៅដែលបានកំណត់
-            const TARGET_LAT = 11.41438804329081;
-            const TARGET_LON = 104.76363762946573;
+            // កំណត់ค่าตัวแปรគោលដៅដំបូង
+            let TARGET_LAT = 11.414388;
+            let TARGET_LON = 104.763638;
+            let RADIUS = 50;
 
             // យក HTML elements
+            const settingsForm = document.getElementById('settings-form');
+            const latInput = document.getElementById('target-lat');
+            const lonInput = document.getElementById('target-lon');
+            const radiusInput = document.getElementById('radius');
+            
             const startBtn = document.getElementById('start-btn');
             const stopBtn = document.getElementById('stop-btn');
             const statusEl = document.getElementById('status');
             const distanceEl = document.getElementById('distance');
             const userCoordsEl = document.getElementById('user-coords');
-            const targetCoordsEl = document.getElementById('target-coords');
+
+            let watchId = null;
+
+            // Function សម្រាប់ធ្វើបច្ចុប្បន្នភាពគោលដៅ
+            function updateTargetLocation() {
+                startBtn.disabled = false;
+                statusEl.className = 'status neutral';
+                statusEl.textContent = 'ទីតាំងគោលដៅបានកំណត់! សូមចុច "ចាប់ផ្តើម"';
+                if (watchId) { // ប្រសិនបើកំពុងតាមដាន ត្រូវតាមដាន مجدداً
+                    stopTracking();
+                    startTracking();
+                }
+            }
             
-            // បង្ហាញកូអរដោនេគោលដៅ
-            targetCoordsEl.textContent = `${TARGET_LAT.toFixed(6)}, ${TARGET_LON.toFixed(6)}`;
+            // ដាក់ค่าដំបូងឲ្យ form
+            updateTargetLocation();
+            
+            // Event Listener សម្រាប់ Form
+            settingsForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                TARGET_LAT = parseFloat(latInput.value);
+                TARGET_LON = parseFloat(lonInput.value);
+                RADIUS = parseFloat(radiusInput.value);
+                updateTargetLocation();
+            });
 
-            let watchId = null; // សម្រាប់រក្សាទុក ID របស់ watchPosition
-
-            // Function សម្រាប់គណនាចម្ងាយ (Haversine formula)
+            // Function គណនាចម្ងាយ (Haversine formula)
             function calculateDistance(lat1, lon1, lat2, lon2) {
                 const R = 6371e3; // รัศมีของโลกគិតជាម៉ែត្រ
-                const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+                const φ1 = lat1 * Math.PI / 180;
                 const φ2 = lat2 * Math.PI / 180;
                 const Δφ = (lat2 - lat1) * Math.PI / 180;
                 const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                    Math.cos(φ1) * Math.cos(φ2) *
-                    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+                const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                return R * c; // លទ្ធផលជាម៉ែត្រ
+                return R * c;
             }
 
             // Function ដែលจะถูกเรียกใช้រាល់ពេលទីតាំង update
             function handleSuccess(position) {
                 const userLat = position.coords.latitude;
                 const userLon = position.coords.longitude;
-
-                // គណនាចម្ងាយ
                 const distance = calculateDistance(TARGET_LAT, TARGET_LON, userLat, userLon);
 
-                // បង្ហាញលទ្ធផល
-                statusEl.textContent = 'កំពុងតាមដានទីតាំង...';
-                distanceEl.textContent = distance.toFixed(2); // បង្ហាញทศนิยม២ខ្ទង់
+                distanceEl.textContent = distance.toFixed(2);
                 userCoordsEl.textContent = `${userLat.toFixed(6)}, ${userLon.toFixed(6)}`;
+
+                if (distance <= RADIUS) {
+                    statusEl.textContent = `អ្នកកំពុងស្ថិតនៅក្នុងតំបន់!`;
+                    statusEl.className = 'status in-zone';
+                } else {
+                    statusEl.textContent = `អ្នកនៅក្រៅតំបន់ដែលបានកំណត់!`;
+                    statusEl.className = 'status out-zone';
+                }
             }
 
-            // Function សម្រាប់จัดการបញ្ហា (Error)
+            // Function សម្រាប់จัดการបញ្ហា
             function handleError(error) {
-                let errorMessage = 'មានបញ្ហាក្នុងការទាញយកទីតាំង៖ ';
+                let errorMessage;
                 switch (error.code) {
                     case error.PERMISSION_DENIED:
-                        errorMessage += "អ្នកបានបដិសេធមិនឲ្យចូលប្រើទីតាំង។";
+                        errorMessage = "អ្នកបានបដិសេធមិនឲ្យចូលប្រើទីតាំង។";
                         break;
                     case error.POSITION_UNAVAILABLE:
-                        errorMessage += "ព័ត៌មានទីតាំងរបស់អ្នកមិនអាចរកឃើញទេ។";
+                        errorMessage = "ព័ត៌មានទីតាំងរបស់អ្នកមិនអាចរកឃើញទេ។";
                         break;
                     case error.TIMEOUT:
-                        errorMessage += "អស់ពេលក្នុងការទាញយកទីតាំង។";
+                        errorMessage = "អស់ពេលក្នុងការទាញយកទីតាំង។";
                         break;
                     default:
-                        errorMessage += "មានបញ្ហាមិនស្គាល់មូលហេតុ។";
+                        errorMessage = "មានបញ្ហាមិនស្គាល់មូលហេតុ។";
                         break;
                 }
                 statusEl.textContent = errorMessage;
-                stopTracking(); // បញ្ឈប់ការតាមដានប្រសិនបើមានបញ្ហា
+                statusEl.className = 'status out-zone';
+                stopTracking();
+            }
+            
+            // Function ដើម្បីចាប់ផ្តើមតាមដាន
+            function startTracking() {
+                if (!navigator.geolocation) {
+                    statusEl.textContent = 'កម្មវិធីរុករករបស់អ្នកមិនគាំទ្រ Geolocation ទេ។';
+                    return;
+                }
+                if (!watchId) {
+                    const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+                    statusEl.textContent = 'កំពុងស្នើសុំការអនុញ្ញាត...';
+                    statusEl.className = 'status neutral';
+                    watchId = navigator.geolocation.watchPosition(handleSuccess, handleError, options);
+                    startBtn.disabled = true;
+                    stopBtn.disabled = false;
+                }
             }
 
             // Function ដើម្បីបញ្ឈប់ការតាមដាន
@@ -220,38 +323,15 @@
                     navigator.geolocation.clearWatch(watchId);
                     watchId = null;
                     statusEl.textContent = 'ការតាមដានបានបញ្ឈប់។';
+                    statusEl.className = 'status neutral';
                     startBtn.disabled = false;
                     stopBtn.disabled = true;
                 }
             }
 
-            // ដាក់ Event Listener លើប៊ូតុង "ចាប់ផ្តើម"
-            startBtn.addEventListener('click', () => {
-                // ពិនិត្យមើលว่า browser รองรับ Geolocation หรือไม่
-                if (!navigator.geolocation) {
-                    statusEl.textContent = 'កម្មវិធីរុករករបស់អ្នកមិនគាំទ្រ Geolocation ទេ។';
-                    return;
-                }
-
-                if (!watchId) {
-                    // Options សម្រាប់ watchPosition ដើម្បីឲ្យលទ្ធផលมีความแม่นยำสูง
-                    const options = {
-                        enableHighAccuracy: true,
-                        timeout: 10000, // អស់ពេលក្នុងរយៈពេល 10 វិនាទី
-                        maximumAge: 0 // មិនប្រើข้อมูลเก่า
-                    };
-
-                    statusEl.textContent = 'កំពុងស្នើសុំការអនុញ្ញាត...';
-                    watchId = navigator.geolocation.watchPosition(handleSuccess, handleError, options);
-                    
-                    startBtn.disabled = true;
-                    stopBtn.disabled = false;
-                }
-            });
-            
-            // ដាក់ Event Listener លើប៊ូតុង "หยุด"
+            startBtn.addEventListener('click', startTracking);
             stopBtn.addEventListener('click', stopTracking);
         });
     </script>
-    </body>
+</body>
 </html>
