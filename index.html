@@ -9,156 +9,199 @@
         @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&display=swap');
 
         :root {
-            --primary-color: #007bff;
+            --primary-color: #0d6efd;
             --danger-color: #dc3545;
-            --success-color: #28a745;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #6c757d;
-            --text-color: #343a40;
+            --success-color: #198754;
+            --light-bg: #f8f9fa;
+            --white-bg: #ffffff;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Kantumruy Pro', sans-serif;
-            background-color: var(--light-gray);
+            background-color: var(--light-bg);
             color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 15px;
+            padding: 1rem;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            background-color: #ffffff;
-            padding: 2rem 2.5rem;
+            background-color: var(--white-bg);
+            padding: 2rem;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 550px;
+            max-width: 500px;
             text-align: center;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 0.5rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header h1 {
-            font-size: 1.75rem;
-            color: var(--primary-color);
-            margin: 0;
+            font-size: 1.6rem;
+            color: var(--text-color);
+            margin: 0 0 0.5rem 0;
         }
         
-        .header img {
-            width: 32px;
-            height: 32px;
-        }
-
-        .container > p {
-            color: var(--dark-gray);
+        .header p {
+            color: var(--text-muted);
             margin-bottom: 2rem;
+            line-height: 1.6;
         }
         
         .settings-form {
-            background: var(--light-gray);
-            padding: 1.5rem;
-            border-radius: 12px;
+            text-align: left;
             margin-bottom: 1.5rem;
-            border: 1px solid #dee2e6;
         }
 
-        .input-group {
+        .input-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
             margin-bottom: 1rem;
         }
-        
-        .input-group.full-width {
-            grid-template-columns: 1fr;
-        }
-
-        .input-field {
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-        }
 
         .input-field label {
+            display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
             font-size: 0.9em;
         }
 
         .input-field input {
-            font-family: 'Kantumruy Pro', sans-serif;
-            padding: 10px;
-            border: 1px solid #ced4da;
+            font-family: inherit;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .input-field input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+        }
+        .input-field input:disabled {
+            background-color: var(--light-bg);
+            cursor: not-allowed;
         }
         
         .btn {
-            font-family: 'Kantumruy Pro', sans-serif;
+            font-family: inherit;
             font-size: 1rem;
             font-weight: 700;
-            padding: 12px 24px;
+            padding: 14px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin: 5px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 0.75rem;
         }
         
         .btn-primary { background-color: var(--primary-color); color: white; }
-        .btn-primary:hover { background-color: #0069d9; }
+        .btn-primary:hover:not(:disabled) { background-color: #0b5ed7; }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         .btn-success { background-color: var(--success-color); color: white; }
-        .btn-success:hover { background-color: #218838; }
+        .btn-success:hover:not(:disabled) { background-color: #157347; }
         .btn-danger { background-color: var(--danger-color); color: white; }
-        .btn-danger:hover { background-color: #c82333; }
-        .btn:disabled { background-color: var(--dark-gray); cursor: not-allowed; }
+        .btn-danger:hover:not(:disabled) { background-color: #bb2d3b; }
+        .btn:disabled { background-color: #adb5bd; cursor: not-allowed; opacity: 0.7; }
+        
+        .btn .icon {
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+        body.is-tracking .btn-success .icon {
+            animation: pulse 1.5s infinite;
+        }
 
         .result-container {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid var(--medium-gray);
+            border-top: 1px solid var(--border-color);
         }
 
         .status {
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             padding: 1rem;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
         
-        .status.in-zone { background-color: #d4edda; color: #155724; }
-        .status.out-zone { background-color: #f8d7da; color: #721c24; }
-        .status.neutral { background-color: var(--medium-gray); color: var(--text-color); }
+        .status.in-zone { background-color: #d1e7dd; color: #0f5132; }
+        .status.out-zone { background-color: #f8d7da; color: #842029; }
+        .status.neutral { background-color: #e2e3e5; color: #41464b; }
+        body.is-tracking .status { animation: pulseBg 1.5s infinite; }
 
         .info-grid {
-            margin-top: 1rem;
             text-align: left;
             display: grid;
             gap: 1rem;
+            font-size: 1.05em;
         }
-
-        .info-grid div {
-            font-size: 1.1em;
-        }
-
         .info-grid span {
             font-weight: 700;
-            color: #d9534f;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            color: var(--danger-color);
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+        @keyframes pulseBg {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* ----- Mobile Responsive Styles ----- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            .input-grid, .controls {
+                grid-template-columns: 1fr;
+            }
+            .btn {
+                padding: 12px;
+            }
         }
     </style>
 </head>
@@ -166,13 +209,12 @@
 
     <div class="container">
         <div class="header">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATTSURBVFhHzZlriFVVFMd/r3uz62qSgWll6UGJKEpQSBdJUBGFFAvKAhGBfBAK3YgIYVURPYwIeukiCjMDIiCiUKRLtEFgpxA/sBRRkZkN6TzNmObce8f7zNn7Nnfe9gMH3Pvuec7+z1p777PWXrsA/6/hE+IN4h/EL0R8/xEvEn9J/C+xlvEe8b7fLwLPEn/4sQ/xnvAf4n85T8x7xGfEhz5/EH/pQ3/EvcR7hL/48BXiS/7zH/GXcZ/xdw4/iH/4tBfxgfEe8Yl/9zHxXfHd1weJLyS+Jp4QZ/8l8S/i7xJ/Ea8Tvyf+K/Gn8Xf7+A1xLw6An3Z1fC6a+KvEn8U7xO/5fS4j3iFeLw3v0c8QPxP/JzS4xPiVw5/E78n1/cRvxL/5sM/xIsk3iY+5P5niQ+IM5u6iJcSTxAv5fS6jXhS/CgH1HfiB+KvPPgH8S8O/gHxLg6fB39n/JbZ4zLie/6r9vEH4iY+p4P/4MDe5z/il0y/ivxP/JrA7wB8TeLhXQ33E3cT7yZe4W8e3k88J/4g/pL4jfg783dG8S8C/xJ/E++V0l+LfyS+If5I/Jn4nwZ/A/E58W9G3yU+7UcP+A7xJ3H/D/0i8bM6+x/xgX4sA98jPu7hK8S75bTvEr8kPufAnxC/J/4Qv0v8Xfxf9P1f3YgXiS97+E/cLaW/k/jFwX8kXujgO8TTpXS/j3jbgX8kfhb/lfg58dE6+zPxfY9fxP039P9A/Jl4g+2eZ/zbgR+J/yT+K6XfEn+Q+L3fX5O4r4Sfgfgu4hMe9iKeKaWtB/yV+D6H7xO3S+nfiwfyD+KvPHwf8VNJv1f8yYE/ED9J/LqEno74k4eXSn8j/sxBB3U6/i4n/k7i3/x5lvi4pI+T+M7Bf5L4W/mXjS8mPi9+oZ2z+IeH7+J9/p7Fh0r6+ImD/yS+Lq3D+w/xO/GzD38R90rpDxJ/cvAfias5aE5yA/E6L59A/J1AnwS/E0/z/19G/L8/7yD+Lu3zVz7+7+z4S+I/Et0S/xG/kPAd3n/pT+JnEn9PPC1l0o/4n/hBAn9H/I14P+s5w8/A31P3J/FlAn9P/LSEj5H4m6S3Kz6U/gTxYgL/g/ge8XNJO8NPiJ8Sf06L+YV4qYQfJ/FrSfeEn+84D/wM/PdkXyZ+S2Lfg/gL8U9JN1g8L20Y/B7xY0l7R3wm9QvxhYQfJvE7/2ci+P6y+4z4N+Kz+f8L4jcJf0j8tP8jQfB9ZveVwO8Qvyf+7m8/3wE+zPqLwO8T75TQX5H4Zf6dIvA7/W+I/0n8uM/TfB8Z/I/EN5P/L4n/SfgR8VNJW0o862A+8fX8/xfx9wS/ivj7xAfkfz/+hfg+gVclfgv814hH8/8fxV8b3p/4j6T3EX9O/IX4R9JnE/9I+Hni+5K2lPC+JvE1gS/l/yD+KvFj8P3j7yV9n8QXEn5GvED8J5XzSnhfEv8kfpa0m2V8rXg34Y/F1wS/h/iXpPeF/xL/K2kzjI/m41t8J/6X+Iv4J+K7ST8hfkz8i/hf0uYZXzTfJf4o+J/x8wL/D/FPJN0b/iz+FfG9pG0Z/i+iBvEj4jWn80UuAAAAAElFTkSuQmCC" alt="Location Pin">
             <h1>ប្រព័ន្ធពិនិត្យទីតាំងឆ្លាតវៃ</h1>
+            <p>កំណត់ទីតាំងគោលដៅ និងកាំតំបន់ រួចចាប់ផ្តើមតាមដានទីតាំងរបស់អ្នកផ្ទាល់</p>
         </div>
-        <p>កំណត់ទីតាំងគោលដៅ និងតំបន់ជុំវិញ រួចចាប់ផ្តើមតាមដានទីតាំងរបស់អ្នកផ្ទាល់</p>
 
         <form class="settings-form" id="settings-form">
-            <div class="input-group">
+            <div class="input-grid">
                 <div class="input-field">
                     <label for="target-lat">Latitude គោលដៅ</label>
                     <input type="number" id="target-lat" step="any" value="11.414388" required>
@@ -182,18 +224,16 @@
                     <input type="number" id="target-lon" step="any" value="104.763638" required>
                 </div>
             </div>
-            <div class="input-group full-width">
-                <div class="input-field">
-                    <label for="radius">កំណត់កាំតំបន់ (ម៉ែត្រ)</label>
-                    <input type="number" id="radius" value="50" required>
-                </div>
+            <div class="input-field">
+                <label for="radius">កំណត់កាំតំបន់ (ម៉ែត្រ)</label>
+                <input type="number" id="radius" value="50" required>
             </div>
-            <button type="submit" class="btn btn-primary">📍 កំណត់ជាទីតាំងគោលដៅ</button>
+            <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">📍 កំណត់ទីតាំងគោលដៅ</button>
         </form>
 
         <div class="controls">
-            <button id="start-btn" class="btn btn-success" disabled>🟢 ចាប់ផ្តើមតាមដាន</button>
-            <button id="stop-btn" class="btn btn-danger" disabled>🔴 បញ្ឈប់តាមដាន</button>
+            <button id="start-btn" class="btn btn-success" disabled><span class="icon"></span>ចាប់ផ្តើមតាមដាន</button>
+            <button id="stop-btn" class="btn btn-danger" disabled><span class="icon" style="background-color: #dc3545;"></span>បញ្ឈប់តាមដាន</button>
         </div>
 
         <div class="result-container">
@@ -207,16 +247,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // កំណត់ค่าตัวแปรគោលដៅដំបូង
             let TARGET_LAT = 11.414388;
             let TARGET_LON = 104.763638;
             let RADIUS = 50;
 
-            // យក HTML elements
             const settingsForm = document.getElementById('settings-form');
             const latInput = document.getElementById('target-lat');
             const lonInput = document.getElementById('target-lon');
             const radiusInput = document.getElementById('radius');
+            const settingsBtn = settingsForm.querySelector('button');
             
             const startBtn = document.getElementById('start-btn');
             const stopBtn = document.getElementById('stop-btn');
@@ -226,21 +265,18 @@
 
             let watchId = null;
 
-            // Function សម្រាប់ធ្វើបច្ចុប្បន្នភាពគោលដៅ
             function updateTargetLocation() {
                 startBtn.disabled = false;
                 statusEl.className = 'status neutral';
                 statusEl.textContent = 'ទីតាំងគោលដៅបានកំណត់! សូមចុច "ចាប់ផ្តើម"';
-                if (watchId) { // ប្រសិនបើកំពុងតាមដាន ត្រូវតាមដាន مجدداً
+                if (watchId) {
                     stopTracking();
                     startTracking();
                 }
             }
             
-            // ដាក់ค่าដំបូងឲ្យ form
             updateTargetLocation();
             
-            // Event Listener សម្រាប់ Form
             settingsForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 TARGET_LAT = parseFloat(latInput.value);
@@ -249,9 +285,8 @@
                 updateTargetLocation();
             });
 
-            // Function គណនាចម្ងាយ (Haversine formula)
             function calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 6371e3; // รัศมีของโลกគិតជាម៉ែត្រ
+                const R = 6371e3;
                 const φ1 = lat1 * Math.PI / 180;
                 const φ2 = lat2 * Math.PI / 180;
                 const Δφ = (lat2 - lat1) * Math.PI / 180;
@@ -261,7 +296,6 @@
                 return R * c;
             }
 
-            // Function ដែលจะถูกเรียกใช้រាល់ពេលទីតាំង update
             function handleSuccess(position) {
                 const userLat = position.coords.latitude;
                 const userLon = position.coords.longitude;
@@ -279,29 +313,26 @@
                 }
             }
 
-            // Function សម្រាប់จัดการបញ្ហា
             function handleError(error) {
                 let errorMessage;
                 switch (error.code) {
-                    case error.PERMISSION_DENIED:
-                        errorMessage = "អ្នកបានបដិសេធមិនឲ្យចូលប្រើទីតាំង។";
-                        break;
-                    case error.POSITION_UNAVAILABLE:
-                        errorMessage = "ព័ត៌មានទីតាំងរបស់អ្នកមិនអាចរកឃើញទេ។";
-                        break;
-                    case error.TIMEOUT:
-                        errorMessage = "អស់ពេលក្នុងការទាញយកទីតាំង។";
-                        break;
-                    default:
-                        errorMessage = "មានបញ្ហាមិនស្គាល់មូលហេតុ។";
-                        break;
+                    case error.PERMISSION_DENIED: errorMessage = "អ្នកបានបដិសេធមិនឲ្យចូលប្រើទីតាំង។"; break;
+                    case error.POSITION_UNAVAILABLE: errorMessage = "ព័ត៌មានទីតាំងរបស់អ្នកមិនអាចរកឃើញទេ។"; break;
+                    case error.TIMEOUT: errorMessage = "អស់ពេលក្នុងការទាញយកទីតាំង។"; break;
+                    default: errorMessage = "មានបញ្ហាមិនស្គាល់មូលហេតុ។"; break;
                 }
                 statusEl.textContent = errorMessage;
                 statusEl.className = 'status out-zone';
                 stopTracking();
             }
             
-            // Function ដើម្បីចាប់ផ្តើមតាមដាន
+            function toggleFormInputs(disabled) {
+                latInput.disabled = disabled;
+                lonInput.disabled = disabled;
+                radiusInput.disabled = disabled;
+                settingsBtn.disabled = disabled;
+            }
+
             function startTracking() {
                 if (!navigator.geolocation) {
                     statusEl.textContent = 'កម្មវិធីរុករករបស់អ្នកមិនគាំទ្រ Geolocation ទេ។';
@@ -312,18 +343,23 @@
                     statusEl.textContent = 'កំពុងស្នើសុំការអនុញ្ញាត...';
                     statusEl.className = 'status neutral';
                     watchId = navigator.geolocation.watchPosition(handleSuccess, handleError, options);
+                    
+                    document.body.classList.add('is-tracking');
+                    toggleFormInputs(true);
                     startBtn.disabled = true;
                     stopBtn.disabled = false;
                 }
             }
 
-            // Function ដើម្បីបញ្ឈប់ការតាមដាន
             function stopTracking() {
                 if (watchId) {
                     navigator.geolocation.clearWatch(watchId);
                     watchId = null;
                     statusEl.textContent = 'ការតាមដានបានបញ្ឈប់។';
                     statusEl.className = 'status neutral';
+                    
+                    document.body.classList.remove('is-tracking');
+                    toggleFormInputs(false);
                     startBtn.disabled = false;
                     stopBtn.disabled = true;
                 }
